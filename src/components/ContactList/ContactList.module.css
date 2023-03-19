@@ -1,10 +1,14 @@
 .list {
   list-style: inside;
   margin-left: 25px;
+ background-color: rgb(37, 37, 37);
+ border: 1px solid rgb(232, 139, 9);
+ margin-bottom: 50px;
+ padding: 20px;
 }
 
 .item:not(:last-child) {
-  margin-bottom: 10px;
+  margin-bottom:20px;
 }
 
 .paragraph {
@@ -12,12 +16,12 @@
 }
 
 .btn {
-  background-color: #fafbfc;
+  background-color: rgb(255, 211, 130);
   border: 1px solid rgba(27, 31, 35, 0.15);
   border-radius: 6px;
   box-shadow: rgba(27, 31, 35, 0.04) 0 1px 0,
     rgba(255, 255, 255, 0.25) 0 1px 0 inset;
-  color: #24292e;
+  color: black;
   cursor: pointer;
   font-size: 12px;
   display: inline-block;

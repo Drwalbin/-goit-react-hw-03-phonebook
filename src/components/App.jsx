@@ -69,13 +69,14 @@ export class App extends React.Component {
     return (
       <div
         style={{
-          height: '100vh',
+          height: '100%',
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
           flexDirection: 'column',
           fontSize: 30,
-          color: '#010101',
+          color: 'orange',
+          backgroundColor: 'black'
         }}
       >
         <h1>Phonebook</h1>

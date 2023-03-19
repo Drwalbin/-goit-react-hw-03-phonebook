@@ -1,10 +1,13 @@
 .label {
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
   font-size: 18px;
 }
 
 .input {
   display: block;
   margin-top: 5px;
+  background-color: orange;
+  color:black;
+  font-size: 16px;
 }
