@@ -16,7 +16,28 @@ const INITIAL_STATE = {
 };
 
 export class App extends React.Component {
-  state = { ...INITIAL_STATE };
+  state = {
+    contacts: [],
+    filter: '',
+  };
+
+  componentDidMount() {
+    const json = localStorage.getItem('contacts');
+    if (json == null) {
+      localStorage.setItem('contacts', JSON.stringify(INITIAL_STATE.contacts));
+    } else {
+      const parseContacts = JSON.parse(json);
+      this.setState({ contacts: parseContacts });
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.contacts.length !== this.state.contacts.length) {
+      const newContacts = this.state.contacts;
+      const json = JSON.stringify(newContacts);
+      localStorage.setItem('contacts', json);
+    }
+  }
 
   handleSubmit = event => {
     event.preventDefault();
@@ -24,8 +45,8 @@ export class App extends React.Component {
     const name = form.elements.name.value;
     const number = form.elements.number.value;
     const newContact = { id: nanoid(6), name: name, number: number };
-    const nameArray = this.state.contacts.map(({ name }) => name);
-    if (nameArray.includes(name)) {
+    const namesArray = this.state.contacts.map(({ name }) => name);
+    if (namesArray.includes(name)) {
       alert(`${name} is already in contacts.`);
     } else {
       this.setState(({ contacts }) => ({
@@ -40,7 +61,15 @@ export class App extends React.Component {
     this.setState({ [name]: value });
   };
 
-  deleteContact = contactID => {
+  fooFilter = () => {
+    const newArray = this.state.contacts.filter(contact => {
+      const valueToLow = this.state.filter.toLowerCase();
+      return contact.name.toLowerCase().includes(valueToLow);
+    });
+    return newArray;
+  };
+
+  fooDelete = contactID => {
     const index = this.state.contacts.findIndex(
       contact => contact.id === contactID
     );
@@ -57,14 +86,6 @@ export class App extends React.Component {
     this.setState(({ contacts }) => ({ contacts: genNewElement() }));
   };
 
-  filterContact = () => {
-    const newArray = this.state.contacts.filter(contact => {
-      const valueToLow = this.state.filter.toLowerCase();
-      return contact.name.toLowerCase().includes(valueToLow);
-    });
-    return newArray;
-  };
-
   render() {
     return (
       <div
@@ -76,7 +97,7 @@ export class App extends React.Component {
           flexDirection: 'column',
           fontSize: 30,
           color: 'orange',
-          backgroundColor: 'black'
+          backgroundColor: 'black',
         }}
       >
         <h1>Phonebook</h1>
@@ -84,10 +105,7 @@ export class App extends React.Component {
 
         <h2>Contacts</h2>
         <Filter value={this.state.filter} handleChange={this.handleChange} />
-        <ContactList
-          onDelete={this.deleteContact}
-          filterArray={this.filterContact}
-        />
+        <ContactList onDelete={this.fooDelete} filterArray={this.fooFilter} />
       </div>
     );
   }
